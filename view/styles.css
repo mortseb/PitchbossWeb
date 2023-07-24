@@ -1,0 +1,558 @@
+@font-face {
+    font-family: 'Lovelo';
+    src: url('fonts/Lovelo-Black.woff2') format('woff2'),
+         url('fonts/Lovelo-Black.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+.body-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto; 
+}
+
+body {
+    background-image: url('images/background.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: 'Lovelo', sans-serif;
+
+}
+.logo-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.logo-container img {
+    width: 50%;
+    height: auto;
+}
+#menu-icon {
+    position: fixed;
+    top: 7px;
+    right: 7px;
+    padding-top: 2px;
+    padding-bottom: 0px;
+    background-color: white;
+    border-radius: 5px;
+    z-index: 10000001;
+    border: 2px solid black;
+
+}
+
+#menu-icon img {
+    width: 30px;
+    height: auto;
+}
+#menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.9); /* Blanc avec 70% d'opacité */
+    border: 2px solid black;
+    overflow: auto;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(100%);
+    z-index: 10000000;
+}
+
+#menu a:not(#menuimg) {
+    display: inline-block;
+    padding: 10px 0;
+    text-decoration: none;
+    color: #333;
+    font-size: 1.6em;
+    margin-top: 70px;
+    line-height: 0;
+}
+
+
+
+
+
+#menu.menu-open {
+    transform: translateX(0);
+}
+
+
+#menu-icon.mirror {
+    transform: scaleX(-1);
+}
+.form-container {
+    width: 300px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid black;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+/* Centrer la pastille verticalement */
+.switch-container {
+    display: flex;
+    align-items: center; /* ajouter cette ligne */
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+/* Cadre autour du titre du formulaire */
+form {
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center; /* centre tous les éléments à l'intérieur du formulaire */
+
+}
+
+/* Rendre les champs de formulaire plus jolis */
+input[type=text], input[type=password], input[type=email] {
+    padding: 10px;
+    
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px; /* arrondit les bords */
+}
+
+/* Centrer les boutons horizontalement */
+button[type=submit] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.message {
+    color: white;
+    text-align: center;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+#decoimg {
+    width: 60%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10%;
+
+}
+
+#menuimg {
+    position: absolute;
+    width: 90% ;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 5%;
+
+}
+
+.buypacks {
+    width: 90%;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+
+  }
+  
+  .user-infos {
+    flex-direction: column;
+    justify-content: start;
+    align-items: flex-start;
+    height: 100%;  /* Assurez-vous que le div parent a une hauteur définie */
+    width: 50%;
+
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    height: 33% ;
+    margin-left: 10px;
+}
+.user-info p {
+    font-size: 0.8em;
+    margin-top: 17px;
+}
+
+.user-info img {
+    margin-right: 10px;
+}
+
+
+
+.infoimg {
+    width: 3%;
+}
+
+.buttonsbox {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    padding: 0 5%;  /* Ajoutez des padding latéraux pour éviter que les boutons ne touchent les bords de l'écran */
+    margin: 20px auto;
+
+}
+
+.buttonbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    background-color: rgba(255, 255, 255, 0.7); /* Couleur de fond blanc avec une opacité de 70% */
+    border: 2px solid black; /* Bordure noire */
+    border-radius: 10px; /* Bords arrondis */
+    padding: 10px; /* Un peu d'espace à l'intérieur pour que tout ne semble pas si serré */
+}
+
+.buttonbox img {
+    width: 80%;
+    height: auto;
+}
+.button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 6px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+@media (max-width: 600px) {
+    .buttonbox {
+        width: 100%; /* On change la largeur pour occuper toute la largeur de l'écran */
+    }
+    .packbox {
+        width: 100%; /* On change la largeur pour occuper toute la largeur de l'écran */
+    }
+    .buttonsbox {
+        flex-direction: column; /* On change l'orientation des flexbox pour les empiler verticalement */
+    }
+}
+
+.packbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 45%;
+    background-color: rgba(255, 255, 255, 0.7); /* Couleur de fond blanc avec une opacité de 70% */
+    border: 2px solid black; /* Bordure noire */
+    border-radius: 10px; /* Bords arrondis */
+    padding: 10px; /* Un peu d'espace à l'intérieur pour que tout ne semble pas si serré */
+}
+
+.packbox img {
+    width: 60%;
+    height: auto;
+}
+.player-card {
+   
+    width: 200px;
+    height: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.player-info {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.player-name {
+    font-weight: bold;
+    font-size: 18px;
+    font-style: italic;
+}
+
+.player-lastname {
+    font-size: 16px;
+}
+
+.player-flag img {
+    width: 40px;
+    height: 25px;
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.player-face {
+    position: relative;
+    width: 100%;
+    height: 150px;
+}
+
+.player-face .face-element {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.player-ratings {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.player-rating {
+    text-align: center;
+    color: #000;
+}
+
+.position {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.rating-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-size: 14px;
+    border: 2px solid #000;
+}
+
+.player-score {
+    text-align: center;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #000;
+
+}
+
+.score-circle {
+    border: 2px solid #000;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+.player-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  #mainlogo {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  .player-flag {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  .player-flag img {
+    border: 2px solid black;
+  }
+  .player-table {
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.player-table th, .player-table td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+
+.player-face-cell {
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+
+.face-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.player-flags {
+    width: 60% ;
+    border: 2px solid #000;
+  }
+  /* Change la couleur du texte pour "Show X entries" */
+.dataTables_length label {
+    color: white;
+}
+
+/* Change la couleur du texte pour les boutons de pagination "Previous" / "Next" */
+.dataTables_paginate a {
+    color: white;
+}
+
+/* Change la couleur du texte pour le champ de recherche */
+.dataTables_filter label {
+    color: white;
+}
+
+/* Change la couleur du texte pour les infos "Showing 1 to 10 of 20 entries" */
+.dataTables_info {
+    color: white;
+}
+.dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {
+    color: #fff;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    color: white !important;
+}
+.dataTables_wrapper .dataTables_length select {
+   color: white;
+}
+.dataTables_wrapper .dataTables_filter input {
+    color: white ;
+}
+
+.column-sort {
+    background-color: #f5f5f5;  /* Couleur de fond de la colonne triée */
+}
+
+.rating-circles {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-size: 14px;
+    border: 2px solid #000;
+    margin-left: auto;
+    margin-right: auto;
+}
+.nationality-cell {
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+
+.info-cell {
+    background-color: rgba(255, 255, 255);
+    width: 50px;
+}
+.note-cell {
+    background-color: rgba(255, 255, 255, 0.7);
+    width: 50px;
+
+}
+.global-cell {
+    background-color: rgba(255, 255, 255, 0.4);
+    width: 50px;
+
+}
+
+.tablecontainer {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.playbtn {
+    display:flex;
+    height: 15%;
+    width: 10%;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: 20px;
+    text-align: center;
+    margin-top: auto ;
+    margin-bottom: auto;
+}
+.playcontainer {
+    width: 50%;
+    align-items: center;
+
+}
