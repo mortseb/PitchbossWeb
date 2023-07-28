@@ -18,5 +18,14 @@ function getRatingColor($rating) {
         return '#ccc';
     }
 }
+function getMatchResultColor($teamScore, $opponentScore) {
+    if ($teamScore > $opponentScore) {
+        return '#00ff00';  // Vert pour une victoire
+    } elseif ($teamScore < $opponentScore) {
+        return '#ff0000';  // Rouge pour une défaite
+    } else {
+        return '#ffff00';  // Jaune pour un match nul
+    }
+}
 
 ?>

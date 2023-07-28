@@ -13,7 +13,7 @@
     ?> 
 </head>
 <body>
-    <header>
+<header>
     <div class="logo-container">
         <a id="mainlogo" href="index.php">
             <img src="images/logo.png" alt="logo">
@@ -25,14 +25,14 @@
         </div>
 
         <div id="menu" class="menu-closed">
-        <a id="menulogo" href="index.php">
+    <a id="decologo" href="../controller/logout.php">
         <img id="menuimg" src="images/logo.png" alt="Logo">
     </a>
-            <a href="#">Onglet 1</a>
-            <a href="#">Onglet 2</a>
-            <a href="#">Onglet 3</a>
-            <a href="#">Onglet 4</a>
-            <a href="#">Onglet 5</a>
+            <a href="versus.php">Prochain Match</a>
+            <a href="player_list.php">Mes joueurs</a>
+            <a href="packs_page.php">Packs</a>
+            <a href="classement.php">Classement</a>
+            <a href="allplayers.php">Meilleurs joueurs</a>
           
     <a href="../controller/logout.php">
         <img id="decoimg" src="images/deconnexion.png" alt="Déconnexion">

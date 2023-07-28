@@ -32,4 +32,15 @@ $stmt = $db->prepare("SELECT * FROM players WHERE ownerid = ? ORDER BY id DESC")
 $stmt->bindValue(1, $user['id'], PDO::PARAM_INT);
 $stmt->execute();
 $players = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$stmt2 = $db->prepare("SELECT gk1, def1, def2, def3, def4, mid1, mid2, mid3, atk1, atk2, atk3 FROM team WHERE ownerid = ?");
+$stmt2->bindValue(1, $user['id'], PDO::PARAM_INT);
+$stmt2->execute();
+$team = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+
+$stmt3 = $db->prepare("SELECT nextnat FROM next_match");
+$stmt3->execute();
+$next_match = $stmt3->fetchAll(PDO::FETCH_ASSOC);
+
 ?>

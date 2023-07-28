@@ -12,7 +12,8 @@
     align-items: center;
     justify-content: center;
     margin-left: auto;
-    margin-right: auto; 
+    margin-right: auto;
+    margin-top: 5%;
 }
 
 body {
@@ -21,12 +22,15 @@ body {
     background-attachment: fixed;
     background-size: cover;
     font-family: 'Lovelo', sans-serif;
-
+    margin-top: 67px;
 }
 .logo-container {
-    display: flex;
-    justify-content: center;
+    top: 0;
+    position: fixed;
+    display: block;
     width: 100%;
+    text-align: center;
+    z-index: -1;
 }
 .logo-container img {
     width: 50%;
@@ -34,7 +38,7 @@ body {
 }
 #menu-icon {
     position: fixed;
-    top: 7px;
+    top: 0; 
     right: 7px;
     padding-top: 2px;
     padding-bottom: 0px;
@@ -69,15 +73,25 @@ body {
     z-index: 10000000;
 }
 
+#menu a:not(#menuimg, #menulogo, #decologo) {
+    border: 1px solid black;
+    border-radius: 40px;
+    background-color: white;
+}
 #menu a:not(#menuimg) {
-    display: inline-block;
-    padding: 10px 0;
+    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
+    padding: 14px;
+    display: flex;
     text-decoration: none;
     color: #333;
-    font-size: 1.6em;
+    font-size: medium;
     margin-top: 70px;
     line-height: 0;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
 }
+
 
 
 
@@ -192,7 +206,8 @@ button[type=submit] {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 10%;
+    bottom: 0;
+    margin-bottom: 10px;
 
 }
 
@@ -421,9 +436,12 @@ button[type=submit] {
     justify-content: space-between;
   }
   #mainlogo {
+    top: 0;
+    position: fixed;
     display: block;
     width: 100%;
     text-align: center;
+    z-index: -1;
   }
   .player-flag {
     display: block;
@@ -555,4 +573,15 @@ button[type=submit] {
     width: 50%;
     align-items: center;
 
+}
+td {
+    border: 2px solid #000;
+}
+
+.firstname {
+    font-size: x-small;
+}
+
+.lastname {
+    font-size: small;
 }

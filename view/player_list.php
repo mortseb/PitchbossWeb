@@ -6,8 +6,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css"/>
-<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -22,7 +20,7 @@
     ?> 
 </head>
 <body>
-    <header>
+<header>
     <div class="logo-container">
         <a id="mainlogo" href="index.php">
             <img src="images/logo.png" alt="logo">
@@ -37,13 +35,13 @@
         <a id="menulogo" href="index.php">
         <img id="menuimg" src="images/logo.png" alt="Logo">
     </a>
-            <a href="#">Onglet 1</a>
-            <a href="#">Onglet 2</a>
-            <a href="#">Onglet 3</a>
-            <a href="#">Onglet 4</a>
-            <a href="#">Onglet 5</a>
+            <a href="versus.php">Prochain Match</a>
+            <a href="player_list.php">Mes joueurs</a>
+            <a href="packs_page.php">Packs</a>
+            <a href="classement.php">Classement</a>
+            <a href="allplayers.php">Meilleurs joueurs</a>
           
-    <a href="../controller/logout.php">
+            <a id="decologo" href="../controller/logout.php">
         <img id="decoimg" src="images/deconnexion.png" alt="Déconnexion">
     </a>
 
@@ -147,6 +145,8 @@
     </tbody>
 </table>
 </div>
-    <script src="script.js"></script>
+<script src="script.js"></script>
+
+    <script src="table.js"></script>
 </body>
 </html>

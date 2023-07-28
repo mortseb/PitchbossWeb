@@ -318,3 +318,74 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+
+/* Styles de base pour tous les écrans */
+
+/* Styles de base pour tous les écrans */
+
+#background-image {
+    width: 100%;
+    background-size: cover;
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#team-left, #team-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    text-align: center;
+    height: fit-content;
+    border: 2px solid black;
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white background */
+}
+
+#team-left {
+    left: 0;
+}
+
+#team-right {
+    right: 0;
+}
+
+#next-match {
+    flex-direction: column;
+    margin-bottom: 0;
+    text-align: center;
+    color: white;
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100vh;
+    justify-content: center;
+    display: flex;
+}
+/* Styles spécifiques pour les écrans en orientation portrait */
+
+@media (max-width: 750px) {
+    #background-image {
+        flex-direction: column;
+    }
+    #team-left, #team-right {
+        position: relative;
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    text-align: center;
+    height: fit-content;
+    border: 2px solid black;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 10px;
+    }
+}
+
+.lastmatch {
+    color: white;
+}

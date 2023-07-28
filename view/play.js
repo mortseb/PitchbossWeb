@@ -125,6 +125,23 @@ function updateAveragesAndTotals() {
             $('#avgMID').text(avgMID.toFixed(2)).css('background-color', getRatingColor(avgMID));
             $('#avgATK').text(avgATK.toFixed(2)).css('background-color', getRatingColor(avgATK));
             $('#avgTotalScore').text(avgTotalScore.toFixed(2)).css('background-color', getRatingColor(avgTotalScore));
+            $.ajax({
+                url: '../controller/update_averages.php',
+                type: 'POST',
+                data: {
+                    avgGK: avgGK,
+                    avgDEF: avgDEF,
+                    avgMID: avgMID,
+                    avgATK: avgATK,
+                    avgTotalScore: avgTotalScore,
+                },
+                success: function(response) {
+                    console.log(response); // Log the server's response
+                },
+                error: function(err) {
+                    console.error(err); // Log any error that occurred
+                },
+            });
         }
     });
 }

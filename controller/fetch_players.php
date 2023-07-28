@@ -2,7 +2,10 @@
     // Démarrer la session
     session_start();
     require __DIR__ . '/vendor/autoload.php';
-    
+    $type = $_POST['type'];
+
+    // Définir la colonne de note en fonction du type de joueur
+    $noteColumn = 'note' . ucfirst($type);
     // Load environment variables from .env file
     $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
     $dotenv->load();

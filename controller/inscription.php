@@ -79,31 +79,39 @@ $stmt->bind_param("ssss", $username, $email, $hashed_password, $team);
 
 // Exécute la requête
 if ($stmt->execute()) {
-    // Générez le code de vérification unique
-$verificationCode = uniqid();
+    // Génère le code de vérification unique
+    $verificationCode = uniqid();
 
-// Enregistrez le code de vérification dans la table verification_codes
-$verificationStmt = $conn->prepare("INSERT INTO verification_codes (username, code) VALUES (?, ?)");
-$verificationStmt->bind_param("ss", $username, $verificationCode);
-$verificationStmt->execute();
+    // Enregistre le code de vérification dans la table verification_codes
+    $verificationStmt = $conn->prepare("INSERT INTO verification_codes (username, code) VALUES (?, ?)");
+    $verificationStmt->bind_param("ss", $username, $verificationCode);
+    $verificationStmt->execute();
 
-// Envoie de l'e-mail de vérification
-$to = $email;
-$subject = "Vérification de votre adresse e-mail";
-$message = "Bonjour $username,\n\nVeuillez cliquer sur le lien suivant pour vérifier votre adresse e-mail :\n\n";
-$message .= "http://mortseb.com/pitchboss/controller/verify.php?code=$verificationCode";
-$headers = "From: sebastienmortiers@gmail.com";
+    // Envoie de l'e-mail de vérification
+    $to = $email;
+    $subject = "Vérification de votre adresse e-mail";
+    $message = "Bonjour $username,\n\nVeuillez cliquer sur le lien suivant pour vérifier votre adresse e-mail :\n\n";
+    $message .= "http://mortseb.com/pitchboss/controller/verify.php?code=$verificationCode";
+    $headers = "From: sebastienmortiers@gmail.com";
 
-mail($to, $subject, $message, $headers);
+    mail($to, $subject, $message, $headers);
 
-// Enregistre le message dans la session
-$message = "Utilisateur créé. Veuillez valider votre compte via le lien que nous vous avons envoyé par mail. (Vérifiez vos indésirables)";
-// Redirige vers la page de connexion avec le message en paramètre GET
-header('Location: ../view/connection.php?message=' . urlencode($message));
-exit;
+    // Enregistre le message dans la session
+    $message = "Utilisateur créé. Veuillez valider votre compte via le lien que nous vous avons envoyé par mail. (Vérifiez vos indésirables)";
+
+    // Insère une nouvelle équipe dans la table "team"
+    $ownerid = $conn->insert_id;  // Récupère l'id de l'utilisateur qui vient d'être inséré
+    $insertTeamStmt = $conn->prepare("INSERT INTO team (ownerid, nextmatch) VALUES (?, 0)");
+    $insertTeamStmt->bind_param("i", $ownerid);
+    $insertTeamStmt->execute();
+
+    // Redirige vers la page de connexion avec le message en paramètre GET
+    header('Location: ../view/connection.php?message=' . urlencode($message));
+    exit;
 } else {
     echo "Erreur: " . $stmt->error;
 }
+
 
 // Ferme la connexion
 $stmt->close();
