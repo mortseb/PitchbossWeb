@@ -1,0 +1,6 @@
+Améliorations : 
+
+
+
+- Tri par nationalité
+- Coupe du monde automatisée

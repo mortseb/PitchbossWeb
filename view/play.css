@@ -357,13 +357,14 @@
 
 #next-match {
     flex-direction: column;
-    margin-bottom: 0;
+    margin-bottom: 20px;
     text-align: center;
     color: white;
     width: 250px;
     margin-left: auto;
     margin-right: auto;
-    height: 100vh;
+    /* height: 100vh; */
+    margin-top: 20px;
     justify-content: center;
     display: flex;
 }

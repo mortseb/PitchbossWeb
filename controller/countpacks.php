@@ -3,7 +3,7 @@ session_start();
 require __DIR__ . '/vendor/autoload.php';
 
 // Récupère les données du formulaire
-$username = $_POST['username'];
+$username2 = $_POST['username'];
 $password = $_POST['password'];
 
 // Load environment variables from .env file

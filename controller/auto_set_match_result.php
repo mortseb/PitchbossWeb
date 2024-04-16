@@ -13,6 +13,8 @@ $db_user = $_ENV['DB_USER'];
 $db_pass = $_ENV['DB_PASS'];
 
 $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
+
+$faker = Faker\Factory::create();
 // 1. Récupérer le prochain match pour chaque équipe unique
 $teams = $db->query("SELECT * FROM team WHERE nextmatch IN (SELECT DISTINCT nextmatch FROM team) AND id IN (SELECT DISTINCT teamid FROM team_season_result) AND id IN (SELECT teamA FROM calendrier WHERE id = nextmatch)")->fetchAll(PDO::FETCH_ASSOC);
 
@@ -39,11 +41,11 @@ foreach ($teams as $team) {
     $occasionA = max(0, round(30*$dominationA/100 * $teamA['avgMID'] /$teamB['avgMID'] + rand(-5, 5)));
     $occasionB = max(0, round(30*$dominationB/100 * $teamB['avgMID'] / $teamA['avgMID'] + rand(-5, 5)));
 
-    $tirA = max(0, round($occasionA * (0.8 + 0.02 * ($teamA['avgATK'] - $teamB['avgDEF']))));
-    $tirB = max(0, round($occasionB * (0.8 + 0.02 * ($teamB['avgATK'] - $teamA['avgDEF']))));
+    $tirA = max(0, round($occasionA * ((rand(30, 80) / 100) + 0.02 * ($teamA['avgATK'] - $teamB['avgDEF']))));
+    $tirB = max(0, round($occasionB * ((rand(30, 80) / 100) + 0.02 * ($teamB['avgATK'] - $teamA['avgDEF']))));
 
-    $scoreA = max(0, round($tirA * (0.5 + 0.02 * ($teamA['avgATK'] - $teamB['avgGK']))));
-    $scoreB = max(0, round($tirB * (0.5 + 0.02 * ($teamB['avgATK'] - $teamA['avgGK']))));
+    $scoreA = max(0, round($tirA * ((rand(0, 40) / 100) + 0.02 * ($teamA['avgATK'] - $teamB['avgGK']))));
+    $scoreB = max(0, round($tirB * ((rand(0, 40) / 100) + 0.02 * ($teamB['avgATK'] - $teamA['avgGK']))));
 
     // Mettre à jour le calendrier avec les résultats du match
     $update = $db->prepare("UPDATE calendrier SET dominationA = ?, dominationB = ?, occasionA = ?, occasionB = ?, tirA = ?, tirB = ?, scoreA = ?, scoreB = ? WHERE id = ?");
@@ -67,8 +69,15 @@ foreach ($teams as $team) {
         $db->exec("UPDATE team_season_result SET points = win * 3 + draw WHERE teamid = {$team['id']}");
 
 
-        $update = $db->prepare("UPDATE users SET credits = credits + ? WHERE id = (SELECT ownerid FROM team WHERE id = ?)");
-        $update->execute([$team['avgTotalScore'], $team['id']]);
+
+$creditsToAdd = 40 * $team['avgTotalScore'];
+
+// Prépare la requête SQL
+$update = $db->prepare("UPDATE users SET credits = credits + ? WHERE id = (SELECT ownerid FROM team WHERE id = ?)");
+
+// Exécute la requête en utilisant la nouvelle valeur de credits
+$update->execute([$creditsToAdd, $team['id']]);
+
     }
 }
 // Générer de nouveaux matchs
@@ -107,5 +116,10 @@ function generateNewMatches($db) {
 
 $teams = $db->query("SELECT * FROM team WHERE id != 4")->fetchAll(PDO::FETCH_ASSOC);
 generateNewMatches($db);
+// Updating the 'date' and 'nextnat' columns in the 'next_match' table
+$next_date = date('Y-m-d', strtotime('+1 day'));
+$next_nat = $faker->countryCode;
 
+$update = $db->prepare("UPDATE next_match SET date = ?, nextnat = ?");
+$update->execute([$next_date, $next_nat]);
 // Fin de votre script

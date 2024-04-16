@@ -17,11 +17,75 @@ function getRatingColor(rating) {
         return '#ccc';
     }
 }
-var countGK = 0, sumGK = 0;
-var countDEF = 0, sumDEF = 0;
-var countMID = 0, sumMID = 0;
-var countATK = 0, sumATK = 0;
-var countPlayers = 0, sumTotalScore = 0;
+
+function updateAveragesAndTotals() {
+    // Calculate the average goalkeeper score
+    var totalGK = 0;
+    var gkPlayers = $('.gkcontainer .player-score-added p');
+    for (var i = 0; i < gkPlayers.length; i++) {
+        totalGK += parseInt(gkPlayers.eq(i).text());
+    }
+    var avgGK = totalGK / gkPlayers.length;
+
+    // Calculate the average defender score
+    var totalDEF = 0;
+    var defPlayers = $('.defcontainer .player-score-added p');
+    for (var i = 0; i < defPlayers.length; i++) {
+        totalDEF += parseInt(defPlayers.eq(i).text());
+    }
+    var avgDEF = totalDEF / defPlayers.length;
+
+    // Calculate the average midfielder score
+    var totalMID = 0;
+    var midPlayers = $('.midcontainer .player-score-added p');
+    for (var i = 0; i < midPlayers.length; i++) {
+        totalMID += parseInt(midPlayers.eq(i).text());
+    }
+    var avgMID = totalMID / midPlayers.length;
+
+    // Calculate the average attacker score
+    var totalATK = 0;
+    var atkPlayers = $('.atkcontainer .player-score-added p');
+    for (var i = 0; i < atkPlayers.length; i++) {
+        totalATK += parseInt(atkPlayers.eq(i).text());
+    }
+    var avgATK = totalATK / atkPlayers.length;
+
+    // Calculate the average total score for all players
+    var totalTotalScore = 0;
+    var totalScorePlayers = $('.player-total-score-added p');
+    for (var i = 0; i < totalScorePlayers.length; i++) {
+        totalTotalScore += parseInt(totalScorePlayers.eq(i).text());
+    }
+    var avgTotalScore = totalTotalScore / totalScorePlayers.length;
+// Mise à jour des scores moyens dans la vue
+$('#avgGK').text(Math.round(avgGK)).css('background-color', getRatingColor(avgGK));
+$('#avgDEF').text(Math.round(avgDEF)).css('background-color', getRatingColor(avgDEF));
+$('#avgMID').text(Math.round(avgMID)).css('background-color', getRatingColor(avgMID));
+$('#avgATK').text(Math.round(avgATK)).css('background-color', getRatingColor(avgATK));
+$('#avgTotalScore').text(Math.round(avgTotalScore)).css('background-color', getRatingColor(avgTotalScore));
+
+    // Perform AJAX request to update the team averages in the database
+    $.ajax({
+        url: '../controller/update_averages.php',
+        type: 'POST',
+        data: {
+            avgGK: avgGK,
+            avgDEF: avgDEF,
+            avgMID: avgMID,
+            avgATK: avgATK,
+            avgTotalScore: avgTotalScore,
+        },
+        success: function(response) {
+            // Handle the success response, if needed
+        },
+        error: function(xhr, status, error) {
+            // Handle the error, if needed
+        }
+    });
+}
+
+
 var userId = $('meta[name="user-id"]').attr('content');
 
 // Get the modal
@@ -54,98 +118,6 @@ window.onclick = function(event) {
 
 // Récupérer les éléments addplayer
 var addPlayers = document.getElementsByClassName('addplayer');
-function updateAveragesAndTotals() {
-    // Récupérer à nouveau les données de l'équipe
-    $.ajax({
-        url: '../controller/fetch_team.php',
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            ownerid: userId,
-        },
-        success: function(data) {
-            // Réinitialiser les compteurs et les sommes
-            countGK = 0;
-            sumGK = 0;
-            countDEF = 0;
-            sumDEF = 0;
-            countMID = 0;
-            sumMID = 0;
-            countATK = 0;
-            sumATK = 0;
-            countPlayers = 0;
-            sumTotalScore = 0;
-
-            // Parcourir les données de l'équipe et mettre à jour les compteurs et les sommes
-            for(var i = 0; i < data.length; i++) {
-                var playerInfo = data[i].player;
-                var position = data[i].position;
-                var totalScore = parseFloat(playerInfo.totalscore);
-            
-                switch (position) {
-                    case 'gk1':
-                        countGK++;
-                        sumGK += parseFloat(playerInfo.noteGardien);
-                        break;
-                    case 'def1':
-                    case 'def2':
-                    case 'def3':
-                    case 'def4':
-                        countDEF++;
-                        sumDEF += parseFloat(playerInfo.noteDefenseur);
-                        break;
-                    case 'mid1':
-                    case 'mid2':
-                    case 'mid3':
-                        countMID++;
-                        sumMID += parseFloat(playerInfo.noteMilieu);
-                        break;
-                    case 'atk1':
-                    case 'atk2':
-                    case 'atk3':
-                        countATK++;
-                        sumATK += parseFloat(playerInfo.noteAttaquant);
-                        break;
-                }
-            
-                countPlayers++;
-                sumTotalScore += totalScore;
-            }
-
-            // Calculer les nouvelles moyennes
-            var avgGK = sumGK / countGK;
-            var avgDEF = sumDEF / countDEF;
-            var avgMID = sumMID / countMID;
-            var avgATK = sumATK / countATK;
-            var avgTotalScore = sumTotalScore / countPlayers;
-
-            // Mettre à jour les div avec les nouvelles moyennes
-            $('#avgGK').text(avgGK.toFixed(2)).css('background-color', getRatingColor(avgGK));
-            $('#avgDEF').text(avgDEF.toFixed(2)).css('background-color', getRatingColor(avgDEF));
-            $('#avgMID').text(avgMID.toFixed(2)).css('background-color', getRatingColor(avgMID));
-            $('#avgATK').text(avgATK.toFixed(2)).css('background-color', getRatingColor(avgATK));
-            $('#avgTotalScore').text(avgTotalScore.toFixed(2)).css('background-color', getRatingColor(avgTotalScore));
-            $.ajax({
-                url: '../controller/update_averages.php',
-                type: 'POST',
-                data: {
-                    avgGK: avgGK,
-                    avgDEF: avgDEF,
-                    avgMID: avgMID,
-                    avgATK: avgATK,
-                    avgTotalScore: avgTotalScore,
-                },
-                success: function(response) {
-                    console.log(response); // Log the server's response
-                },
-                error: function(err) {
-                    console.error(err); // Log any error that occurred
-                },
-            });
-        }
-    });
-}
-
 
 // Parcourir tous les éléments addplayer
 for(var i = 0; i < addPlayers.length; i++) {
@@ -232,11 +204,6 @@ for(var i = 0; i < addPlayers.length; i++) {
 
 $(document).ready(function() {
     // Effectuer une requête AJAX pour récupérer les données de l'équipe
-    updateAveragesAndTotals();
-});
-// Lorsque le document est prêt
-$(document).ready(function() {
-    // Effectuer une requête AJAX pour récupérer les données de l'équipe
     $.ajax({
         url: '../controller/fetch_team.php',  // URL du script PHP qui va interroger la base de données
         type: 'POST',
@@ -250,105 +217,90 @@ $(document).ready(function() {
                 // Récupérer les informations du joueur et la position
                 var playerInfo = data[i].player;
                 var position = data[i].position;
-            
-                // Convertir le score total en nombre
-                var totalScore = parseFloat(playerInfo.totalscore);
-            
-                // Incrémenter les compteurs et ajouter le score aux sommes
-                switch (position) {
-                    case 'gk1':
-                        countGK++;
-                        sumGK += parseFloat(playerInfo.noteGardien);
-                        break;
-                    case 'def1':
-                    case 'def2':
-                    case 'def3':
-                    case 'def4':
-                        countDEF++;
-                        sumDEF += parseFloat(playerInfo.noteDefenseur);
-                        break;
-                    case 'mid1':
-                    case 'mid2':
-                    case 'mid3':
-                        countMID++;
-                        sumMID += parseFloat(playerInfo.noteMilieu);
-                        break;
-                    case 'atk1':
-                    case 'atk2':
-                    case 'atk3':
-                        countATK++;
-                        sumATK += parseFloat(playerInfo.noteAttaquant);
-                        break;
+
+                // Vérifier si playerInfo est null (ce qui signifie qu'il s'agit de l'entrée des moyennes)
+                if (playerInfo == null) {
+                    // Mettre à jour les div avec les moyennes
+                    $('#avgGK').text(data[i].averages.avgGK).css('background-color', getRatingColor(data[i].averages.avgGK));
+                    $('#avgDEF').text(data[i].averages.avgDEF).css('background-color', getRatingColor(data[i].averages.avgDEF));
+                    $('#avgMID').text(data[i].averages.avgMID).css('background-color', getRatingColor(data[i].averages.avgMID));
+                    $('#avgATK').text(data[i].averages.avgATK).css('background-color', getRatingColor(data[i].averages.avgATK));
+                    $('#avgTotalScore').text(data[i].averages.avgTotalScore).css('background-color', getRatingColor(data[i].averages.avgTotalScore));
+                } else {
+                    // Déterminer le score à afficher en fonction de la position
+var score;
+switch (position) {
+    case 'gk1':
+        score = playerInfo.noteGardien;
+        break;
+    case 'def1':
+    case 'def2':
+    case 'def3':
+    case 'def4':
+        score = playerInfo.noteDefenseur;
+        break;
+    case 'mid1':
+    case 'mid2':
+    case 'mid3':
+        score = playerInfo.noteMilieu;
+        break;
+    case 'atk1':
+    case 'atk2':
+    case 'atk3':
+        score = playerInfo.noteAttaquant;
+        break;
+    default:
+        score = 'N/A';
+}
+
+// Trouver le bouton correspondant à la position
+var addButton = $('#' + position);
+
+// Mettre à jour le bouton avec les informations du joueur
+$(addButton).html(`
+    <div class="player-added">
+        <div class="player-image-added">
+            <img src="${playerInfo.faceLink}" alt="Face">
+            <img src="${playerInfo.eyebrowsLink}" alt="Eyebrows">
+            <img src="${playerInfo.eyesLink}" alt="Eyes">
+            <img src="${playerInfo.mouthLink}" alt="Mouth">
+            <img src="${playerInfo.noseLink}" alt="Nose">
+        </div>
+        <div class="player-score-added" style="background-color:${getRatingColor(score)};">
+            <p>${score}</p>
+        </div>
+        <div class="player-total-score-added" style="background-color:${getRatingColor(playerInfo.totalscore)};">
+            <p>${playerInfo.totalscore}</p>
+        </div>
+    </div>
+`);
+
                 }
-            
-                // Incrémenter le compteur des joueurs et ajouter le score total à la somme
-                countPlayers++;
-                sumTotalScore += totalScore;
-
-                // Déterminer le score à afficher en fonction de la position
-                var score;
-                switch (position) {
-                    case 'gk1':
-                        score = playerInfo.noteGardien;
-                        break;
-                    case 'def1':
-                    case 'def2':
-                    case 'def3':
-                    case 'def4':    
-                        score = playerInfo.noteDefenseur;
-                        break;
-                    case 'mid1':
-                    case 'mid2':
-                    case 'mid3':
-                        score = playerInfo.noteMilieu;
-                        break;
-                    case 'atk1':
-                    case 'atk2':
-                    case 'atk3':
-                        score = playerInfo.noteAttaquant;
-                        break;
-                    default:
-                        score = 'N/A';
-                }
-
-                // Trouver le bouton correspondant à la position
-                var addButton = $('#' + position);
-
-                // Mettre à jour le bouton avec les informations du joueur
-                $(addButton).html(`
-                    <div class="player-added">
-                        <div class="player-image-added">
-                            <img src="${playerInfo.faceLink}" alt="Face">
-                            <img src="${playerInfo.eyebrowsLink}" alt="Eyebrows">
-                            <img src="${playerInfo.eyesLink}" alt="Eyes">
-                            <img src="${playerInfo.mouthLink}" alt="Mouth">
-                            <img src="${playerInfo.noseLink}" alt="Nose">
-                        </div>
-                        <div class="player-score-added" style="background-color:${getRatingColor(score)};">
-                            <p>${score}</p>
-                        </div>
-                        <div class="player-total-score-added" style="background-color:${getRatingColor(playerInfo.totalscore)};">
-                            <p>${playerInfo.totalscore}</p>
-                        </div>
-                    </div>
-                `);
             }
-
-            // Calculer les moyennes
-            var avgGK = sumGK / countGK;
-            var avgDEF = sumDEF / countDEF;
-            var avgMID = sumMID / countMID;
-            var avgATK = sumATK / countATK;
-            var avgTotalScore = sumTotalScore / countPlayers;
-
-            // Mettre à jour les div avec les moyennes
-$('#avgGK').text(avgGK.toFixed(2)).css('background-color', getRatingColor(avgGK));
-$('#avgDEF').text(avgDEF.toFixed(2)).css('background-color', getRatingColor(avgDEF));
-$('#avgMID').text(avgMID.toFixed(2)).css('background-color', getRatingColor(avgMID));
-$('#avgATK').text(avgATK.toFixed(2)).css('background-color', getRatingColor(avgATK));
-$('#avgTotalScore').text(avgTotalScore.toFixed(2)).css('background-color', getRatingColor(avgTotalScore));
-
         }
     }); // Fermeture du bloc AJAX
 }); // Fermeture du bloc $(document).ready
+$('.player-info').on({
+    mouseenter: function () {
+        // Get player's information
+        var playerName = $(this).find('.player-name').text();
+        var playerScore = $(this).find('.player-score p').text();
+        var playerTotalScore = $(this).find('.player-total-score p').text();
 
+        // Create tooltip div
+        var tooltip = $(
+            `<div class="tooltip">
+                <p>Name: ${playerName}</p>
+                <p>Score: ${playerScore}</p>
+                <p>Total Score: ${playerTotalScore}</p>
+            </div>`
+        );
+
+        // Add tooltip to player div
+        $(this).append(tooltip);
+    },
+    mouseleave: function () {
+        // Remove tooltip
+        $(this).find('.tooltip').remove();
+    }
+});

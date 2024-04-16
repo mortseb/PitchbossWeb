@@ -87,14 +87,16 @@ if ($stmt->execute()) {
     $verificationStmt->bind_param("ss", $username, $verificationCode);
     $verificationStmt->execute();
 
-    // Envoie de l'e-mail de vérification
-    $to = $email;
-    $subject = "Vérification de votre adresse e-mail";
-    $message = "Bonjour $username,\n\nVeuillez cliquer sur le lien suivant pour vérifier votre adresse e-mail :\n\n";
-    $message .= "http://mortseb.com/pitchboss/controller/verify.php?code=$verificationCode";
-    $headers = "From: sebastienmortiers@gmail.com";
+// Envoie de l'e-mail de vérification
+$to = $email;
+$subject = "Vérification de votre adresse e-mail";
+$message = "Bonjour $username,\n\nVeuillez cliquer sur le lien suivant pour vérifier votre adresse e-mail :\n\n";
+$message .= "http://mortseb.com/pitchboss/controller/verify.php?code=$verificationCode";
+$headers = "From: sebastienmortiers@gmail.com\r\n"; // Ajoutez le retour à la ligne "\r\n"
+$headers .= "Content-type: text/plain; charset=UTF-8\r\n"; // Définit le charset en UTF-8
 
-    mail($to, $subject, $message, $headers);
+mail($to, $subject, $message, $headers);
+
 
     // Enregistre le message dans la session
     $message = "Utilisateur créé. Veuillez valider votre compte via le lien que nous vous avons envoyé par mail. (Vérifiez vos indésirables)";

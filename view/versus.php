@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="play.css">
     <link rel="stylesheet" href="versus.css">
 
-    <title>Votre Site Web</title>
+    <title>PitchBoss</title>
     
      <?php
         require('../controller/isConnected.php');
@@ -19,6 +19,14 @@
 </head>
 <body>
 <header>
+<div class="back-button" onclick="goBack()"></div>
+
+<script>
+  // La fonction pour revenir à la page précédente
+  function goBack() {
+    window.history.back();
+  }
+</script>
     <div class="logo-container">
         <a id="mainlogo" href="index.php">
             <img src="images/logo.png" alt="logo">
@@ -30,7 +38,7 @@
         </div>
 
         <div id="menu" class="menu-closed">
-        <a id="menulogo" href="index.php">
+    <a id="decologo" href="../controller/logout.php">
         <img id="menuimg" src="images/logo.png" alt="Logo">
     </a>
             <a href="versus.php">Prochain Match</a>
@@ -39,7 +47,7 @@
             <a href="classement.php">Classement</a>
             <a href="allplayers.php">Meilleurs joueurs</a>
           
-            <a id="decologo" href="../controller/logout.php">
+    <a href="../controller/logout.php">
         <img id="decoimg" src="images/deconnexion.png" alt="Déconnexion">
     </a>
 

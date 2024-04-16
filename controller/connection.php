@@ -42,15 +42,14 @@ $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
 // Vérifie le mot de passe
-if ($user && password_verify($password, $user['password']) && $user['verified']==1) {
+if ($user && password_verify($password, $user['password']) && $user['verified'] == 1) {
     // Initialiser la session et stocker l'information de l'utilisateur
     $_SESSION['username'] = $user['username'];
-    $_SESSION['user_id'] = $user['id'];  // Ligne ajoutée
+    $_SESSION['user_id'] = $user['id'];
     $_SESSION['logged_in'] = true;
     // Redirige vers la page d'accueil
     header('Location: ../view/index.php');
-}
-else {
+} else {
     // Stocke le message d'erreur dans la session
     $message = "Nom d'utilisateur ou mot de passe incorrect. Assurez-vous d'avoir validé votre compte via le mail de confirmation.";
     // Redirige vers la page de connexion
@@ -60,4 +59,3 @@ else {
 // Ferme la connexion
 $stmt->close();
 $conn->close();
-?>

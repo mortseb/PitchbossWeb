@@ -26,7 +26,6 @@ try {
     die("Erreur de connexion à la base de données: " . $e->getMessage());
 }
 
-
 // Fetch all players owned by the current user
 $stmt = $db->prepare("SELECT * FROM players WHERE ownerid = ? ORDER BY id DESC");
 $stmt->bindValue(1, $user['id'], PDO::PARAM_INT);
@@ -38,9 +37,8 @@ $stmt2->bindValue(1, $user['id'], PDO::PARAM_INT);
 $stmt2->execute();
 $team = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
-
-$stmt3 = $db->prepare("SELECT nextnat FROM next_match");
+// Get next match nationality
+$stmt3 = $db->prepare("SELECT nextnat FROM next_match LIMIT 1");
 $stmt3->execute();
-$next_match = $stmt3->fetchAll(PDO::FETCH_ASSOC);
-
+$next_match_nationality = $stmt3->fetchColumn();
 ?>

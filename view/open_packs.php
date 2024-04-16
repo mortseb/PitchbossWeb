@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Votre Site Web</title>
+    <title>PitchBoss</title>
     
      <?php
-        // require('../controller/isConnected.php');
+        require('../controller/isConnected.php');
         include('../controller/getUserInfo.php');
         include('../controller/countpacks.php');
 
@@ -16,6 +16,14 @@
 </head>
 <body>
 <header>
+<div class="back-button" onclick="goBack()"></div>
+
+<script>
+  // La fonction pour revenir à la page précédente
+  function goBack() {
+    window.history.back();
+  }
+</script>
     <div class="logo-container">
         <a id="mainlogo" href="index.php">
             <img src="images/logo.png" alt="logo">
@@ -46,9 +54,9 @@
     <div class="body-content">
     <div class="buypacks">
         <div class="user-infos">
-            <div class="user-info">
+        <div class="user-info">
             <img class="infoimg" src="images/username_icon.png" alt="User Icon">
-            <p><?php echo $username; ?></p>
+            <p><?php echo $_SESSION['username']; ?></p>
             </div>
             <div class="user-info">
             <img class="infoimg" src="images/credits_icon.png" alt="Credits Icon">
